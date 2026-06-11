@@ -1,0 +1,35 @@
+# Dependencies
+node_modules
+.pnpm-store
+
+# Build output
+dist
+build
+out
+.turbo
+
+# Testing
+coverage
+
+# Logs
+logs
+*.log
+
+# Environment files
+.env*
+*.local
+
+# TypeScript
+*.tsbuildinfo
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+
+# OS
+.DS_Store
+
+# Local settings
+settings.local.json
+.claude/worktrees/

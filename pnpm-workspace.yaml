@@ -1,0 +1,11 @@
+allowBuilds:
+  esbuild: false
+
+blockExoticSubdeps: true
+
+minimumReleaseAge: 10080
+
+minimumReleaseAgeExclude:
+  - '@k8o/*'
+
+verifyDepsBeforeRun: install
