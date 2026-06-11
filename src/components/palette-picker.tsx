@@ -1,15 +1,13 @@
 import { cn } from '@k8o/arte-odyssey';
 
 import { PALETTES, type Palette } from '../engine/palettes';
+import { INK_SLOTS } from './ink-slots';
 
 type PalettePickerProps = {
   paletteId: string;
   custom: Palette;
   onPaletteChange: (id: string) => void;
 };
-
-/** えのぐは固定5枠。並び位置そのものが同一性なのでキーに使う */
-const INK_SLOTS = ['slot-1', 'slot-2', 'slot-3', 'slot-4', 'slot-5'];
 
 const CARD_CLASS =
   'border-border-mute has-[:checked]:border-primary-border has-[:checked]:bg-primary-bg-subtle hover:bg-bg-subtle hover:has-[:checked]:bg-primary-bg-subtle has-[:focus-visible]:ring-primary-border flex cursor-pointer flex-col gap-2 rounded-2xl border p-3 transition-colors duration-150 ease-out has-[:focus-visible]:ring-2';

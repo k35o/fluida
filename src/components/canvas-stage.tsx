@@ -1,5 +1,6 @@
 import { cn } from '@k8o/arte-odyssey';
 import type { PointerEvent } from 'react';
+import { useCallback } from 'react';
 
 import {
   ART_SIZE,
@@ -17,6 +18,18 @@ type CanvasStageProps = {
   buildConfig: () => GestureConfig;
 };
 
+function toArtPoint(
+  canvas: HTMLCanvasElement,
+  clientX: number,
+  clientY: number,
+): { x: number; y: number } {
+  const rect = canvas.getBoundingClientRect();
+  return {
+    x: ((clientX - rect.left) / rect.width) * ART_SIZE,
+    y: ((clientY - rect.top) / rect.height) * ART_SIZE,
+  };
+}
+
 export function CanvasStage({
   session,
   tool,
@@ -25,6 +38,14 @@ export function CanvasStage({
   unsupported,
   buildConfig,
 }: CanvasStageProps) {
+  const attachCanvas = useCallback(
+    (node: HTMLCanvasElement | null) => {
+      if (!node) return undefined;
+      return session.attach(node);
+    },
+    [session],
+  );
+
   const handlePointerDown = (event: PointerEvent<HTMLCanvasElement>) => {
     if (!event.isPrimary || event.button !== 0) return;
     try {
@@ -32,28 +53,21 @@ export function CanvasStage({
     } catch {
       // ポインタが既に非アクティブな場合（合成イベント等）は捕捉なしで続行する
     }
-    const rect = event.currentTarget.getBoundingClientRect();
-    session.beginGesture(
-      tool,
-      ((event.clientX - rect.left) / rect.width) * ART_SIZE,
-      ((event.clientY - rect.top) / rect.height) * ART_SIZE,
-      buildConfig(),
-    );
+    const point = toArtPoint(event.currentTarget, event.clientX, event.clientY);
+    session.beginGesture(tool, point.x, point.y, buildConfig());
   };
 
   const handlePointerMove = (event: PointerEvent<HTMLCanvasElement>) => {
     if (!event.isPrimary) return;
-    const rect = event.currentTarget.getBoundingClientRect();
+    const canvas = event.currentTarget;
     // 滑らかな軌跡のため、フレーム間に間引かれたポインタ位置も拾う
     const moves =
       typeof event.nativeEvent.getCoalescedEvents === 'function'
         ? event.nativeEvent.getCoalescedEvents()
         : [];
     for (const move of moves.length > 0 ? moves : [event.nativeEvent]) {
-      session.moveGesture(
-        ((move.clientX - rect.left) / rect.width) * ART_SIZE,
-        ((move.clientY - rect.top) / rect.height) * ART_SIZE,
-      );
+      const point = toArtPoint(canvas, move.clientX, move.clientY);
+      session.moveGesture(point.x, point.y);
     }
   };
 
@@ -64,7 +78,7 @@ export function CanvasStage({
   return (
     <div className="relative">
       <canvas
-        ref={(node) => (node ? session.attach(node) : undefined)}
+        ref={attachCanvas}
         aria-label="えのぐあそびのキャンバス。ポインターでえのぐを落としたり流したりして模様を描く"
         className="block aspect-square w-full cursor-crosshair touch-none rounded-2xl shadow-lg ring-1 shadow-black/5 ring-black/5 select-none"
         style={{ backgroundColor: paper }}
@@ -72,6 +86,7 @@ export function CanvasStage({
         onPointerMove={handlePointerMove}
         onPointerUp={endGesture}
         onPointerCancel={endGesture}
+        onLostPointerCapture={endGesture}
       />
       <div
         aria-hidden

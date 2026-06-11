@@ -1,12 +1,10 @@
 import { PALETTES, type Palette } from '../engine/palettes';
+import { INK_SLOTS } from './ink-slots';
 
 type CustomPaletteEditorProps = {
   palette: Palette;
   onChange: (paper: string, inks: readonly string[]) => void;
 };
-
-/** えのぐは固定5枠。並び位置そのものが同一性なのでキーに使う */
-const INK_SLOTS = ['slot-1', 'slot-2', 'slot-3', 'slot-4', 'slot-5'];
 
 const PICKER_CLASS =
   'border-border-mute hover:border-border-emphasize focus-visible:ring-primary-border block size-9 cursor-pointer appearance-none rounded-full border bg-transparent p-0 outline-none transition-colors duration-150 ease-out focus-visible:ring-2 focus-visible:ring-offset-2 [&::-moz-color-swatch]:rounded-full [&::-moz-color-swatch]:border-none [&::-webkit-color-swatch]:rounded-full [&::-webkit-color-swatch]:border-none [&::-webkit-color-swatch-wrapper]:p-0';

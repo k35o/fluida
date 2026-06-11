@@ -1,4 +1,5 @@
 import type { InkChoice, Palette } from '../engine/palettes';
+import { INK_SLOTS } from './ink-slots';
 
 type InkPickerProps = {
   palette: Palette;
@@ -30,7 +31,7 @@ export function InkPicker({ palette, ink, onInkChange }: InkPickerProps) {
         </label>
         {palette.inks.map((color, index) => (
           <label
-            key={color}
+            key={INK_SLOTS[index] ?? index}
             className={SWATCH_CLASS}
             style={{ backgroundColor: color }}
           >
