@@ -1,0 +1,16 @@
+@import '@k8o/arte-odyssey/styles.css';
+
+:root {
+  --font-noto-sans-jp:
+    'Noto Sans JP', 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', sans-serif;
+  --font-m-plus-2: 'Noto Sans JP', sans-serif;
+  --font-wordmark: 'Fraunces', 'Georgia', serif;
+}
+
+@theme inline {
+  --font-wordmark: var(--font-wordmark);
+}
+
+body {
+  font-family: var(--font-noto-sans-jp);
+}
