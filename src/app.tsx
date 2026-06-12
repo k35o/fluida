@@ -10,6 +10,7 @@ import {
   type InkChoice,
 } from './engine/palettes';
 import { FluidSession, type GestureConfig, type Tool } from './engine/session';
+import { saveOrShareImage } from './helpers/share-image';
 import {
   CUSTOM_PALETTE_ID,
   useCustomPalette,
@@ -106,13 +107,13 @@ export function App() {
   const handleSave = async () => {
     try {
       const blob = await session.exportPng();
-      const url = URL.createObjectURL(blob);
-      const anchor = document.createElement('a');
-      anchor.href = url;
-      anchor.download = `fluida-${timestamp()}.png`;
-      anchor.click();
-      URL.revokeObjectURL(url);
-      onOpen('success', 'もようを画像にのこしました');
+      const result = await saveOrShareImage(blob, `fluida-${timestamp()}.png`);
+      if (result === 'shared') {
+        onOpen('success', 'シェアしました');
+      } else if (result === 'downloaded') {
+        onOpen('success', 'もようを画像にのこしました');
+      }
+      // canceled（共有シートを閉じた）ときは何も出さない
     } catch {
       onOpen('error', 'のこせませんでした。もう一度ためしてください');
     }
