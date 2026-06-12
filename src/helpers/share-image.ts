@@ -34,19 +34,21 @@ export async function saveOrShareImage(
   filename: string,
 ): Promise<SaveResult> {
   const file = new File([blob], filename, { type: 'image/png' });
-  const { canShare, share } = navigator as WebShareNavigator;
+  // canShare / share は navigator に束縛が必要なメソッドのため、分割代入せず
+  // navigator 越しに呼ぶ（外すと this を失い Illegal invocation で落ちる）。
+  const nav: WebShareNavigator = navigator;
 
   if (
-    typeof canShare === 'function' &&
-    typeof share === 'function' &&
-    canShare({ files: [file] }) &&
+    typeof nav.canShare === 'function' &&
+    typeof nav.share === 'function' &&
+    nav.canShare({ files: [file] }) &&
     prefersShareSheet()
   ) {
     try {
       // iOS では share() がユーザー操作の有効化（transient activation）を
       // 要求する。呼び出し側は画像生成からこの share() までを最短の await で
       // つなぎ、有効化が切れないようにしている。
-      await share({
+      await nav.share({
         files: [file],
         title: 'fluida',
         text: 'えのぐあそびで描きました',
