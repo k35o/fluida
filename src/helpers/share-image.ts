@@ -1,9 +1,10 @@
 /**
  * 作品の画像を共有または保存する。
  *
- * Web Share API でファイル共有できる端末（多くはスマホ）では共有シートを
- * 開き、できない端末（多くのデスクトップ）ではダウンロードにフォールバック
- * する。共有シートを閉じただけのときは 'canceled' を返し、エラー扱いしない。
+ * スマホ・タブレットのように指で操作する端末では共有シートを開き、
+ * 「写真に保存」や SNS 送信ができるようにする。マウス主体のデスクトップ
+ * では余計なメニューを挟まず、そのままファイルをダウンロードする。
+ * 共有シートを閉じただけのときは 'canceled' を返し、エラー扱いしない。
  */
 export type SaveResult = 'shared' | 'downloaded' | 'canceled';
 
@@ -14,20 +15,38 @@ type WebShareNavigator = {
   share?: (data: ShareData) => Promise<void>;
 };
 
+/**
+ * 共有シートを優先すべき端末かどうかを判定する。
+ *
+ * 主たるポインタが「粗い（指）」端末＝スマホ・タブレットでは、共有シート
+ * から写真アプリや SNS に直接わたせて便利。マウスのデスクトップ（Mac/PC）は
+ * 共有メニューよりも直接ダウンロードのほうが「画像でのこす」の語感に近い。
+ */
+function prefersShareSheet(): boolean {
+  return (
+    typeof window.matchMedia === 'function' &&
+    window.matchMedia('(pointer: coarse)').matches
+  );
+}
+
 export async function saveOrShareImage(
   blob: Blob,
   filename: string,
 ): Promise<SaveResult> {
   const file = new File([blob], filename, { type: 'image/png' });
-  const nav: WebShareNavigator = navigator;
+  const { canShare, share } = navigator as WebShareNavigator;
 
   if (
-    typeof nav.canShare === 'function' &&
-    typeof nav.share === 'function' &&
-    nav.canShare({ files: [file] })
+    typeof canShare === 'function' &&
+    typeof share === 'function' &&
+    canShare({ files: [file] }) &&
+    prefersShareSheet()
   ) {
     try {
-      await nav.share({
+      // iOS では share() がユーザー操作の有効化（transient activation）を
+      // 要求する。呼び出し側は画像生成からこの share() までを最短の await で
+      // つなぎ、有効化が切れないようにしている。
+      await share({
         files: [file],
         title: 'fluida',
         text: 'えのぐあそびで描きました',
