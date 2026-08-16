@@ -33,7 +33,7 @@
     "oxlint-tailwindcss": "1.1.0",
     "typescript": "7.0.2",
     "vite": "8.0.14",
-    "vite-plus": "0.2.8",
+    "vite-plus": "0.2.9",
     "vitest": "4.1.10"
   },
   "engines": {
