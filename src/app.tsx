@@ -39,9 +39,7 @@ function timestamp(): string {
 }
 
 export function App() {
-  const sessionRef = useRef<FluidSession | null>(null);
-  sessionRef.current ??= new FluidSession(DEFAULT_PALETTE.paper);
-  const session = sessionRef.current;
+  const [session] = useState(() => new FluidSession(DEFAULT_PALETTE.paper));
 
   const [tool, setTool] = useState<Tool>('drop');
   const [paletteId, setPaletteId] = useState(DEFAULT_PALETTE.id);

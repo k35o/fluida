@@ -1,4 +1,3 @@
-/* oxlint-disable unicorn/prefer-math-trunc -- `>>> 0` は uint32 への折り返しが目的で、負数を扱えない Math.trunc では代替できない */
 export type Rng = () => number;
 
 /** 再現可能な乱数列を生成する（テスト・おまかせ生成用） */
