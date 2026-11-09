@@ -1,12 +1,8 @@
 import type { PointerEvent } from 'react';
 import { useCallback } from 'react';
 
-import {
-  ART_SIZE,
-  type FluidSession,
-  type GestureConfig,
-  type Tool,
-} from '../engine/session';
+import { ART_SIZE } from '../engine/session';
+import type { FluidSession, GestureConfig, Tool } from '../engine/session';
 
 import styles from './canvas-stage.module.css';
 

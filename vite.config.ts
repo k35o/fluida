@@ -1,5 +1,5 @@
 import betterCssModules from '@better-css-modules/vite';
-import { fmt, react as reactLint, test } from '@k8o/oxc-config';
+import { fmt, react as reactLint, test, TEST_GLOBS } from '@k8o/oxc-config';
 import react from '@vitejs/plugin-react';
 import { defineConfig } from 'vite-plus';
 
@@ -15,20 +15,11 @@ export default defineConfig({
       reportUnusedDisableDirectives: 'error',
     },
     settings: {
-      react: { version: '19.3.0' },
+      react: { version: '19.3.1' },
     },
-    overrides: [
-      {
-        files: ['**/*.test.ts', '**/*.test.tsx'],
-        plugins: [...(test.plugins ?? [])],
-        rules: test.rules,
-      },
-    ],
+    overrides: [{ files: [...TEST_GLOBS], ...test }],
   },
   staged: {
     '*.{js,ts,cjs,mjs,jsx,tsx,json,jsonc}': 'vp check --fix',
-  },
-  test: {
-    globals: true,
   },
 });

@@ -1,6 +1,7 @@
 import { useState } from 'react';
 
-import { DEFAULT_PALETTE, type Palette } from '../engine/palettes';
+import { DEFAULT_PALETTE } from '../engine/palettes';
+import type { Palette } from '../engine/palettes';
 
 export const CUSTOM_PALETTE_ID = 'custom';
 

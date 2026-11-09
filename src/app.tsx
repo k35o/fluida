@@ -4,12 +4,10 @@ import { useEffect, useRef, useState, useSyncExternalStore } from 'react';
 
 import { CanvasStage } from './components/canvas-stage';
 import { ControlPanel } from './components/control-panel';
-import {
-  DEFAULT_PALETTE,
-  findPalette,
-  type InkChoice,
-} from './engine/palettes';
-import { FluidSession, type GestureConfig, type Tool } from './engine/session';
+import { DEFAULT_PALETTE, findPalette } from './engine/palettes';
+import type { InkChoice } from './engine/palettes';
+import { FluidSession } from './engine/session';
+import type { GestureConfig, Tool } from './engine/session';
 import { saveOrShareImage } from './helpers/share-image';
 import {
   CUSTOM_PALETTE_ID,
@@ -41,6 +39,9 @@ function timestamp(): string {
 }
 
 export function App() {
+  // 一度だけ作って差し替えないので setter を持たない。render 中に ref を読む遅延初期化は
+  // React Compiler の規則に触れる
+  // oxlint-disable-next-line react/hook-use-state
   const [session] = useState(() => new FluidSession(DEFAULT_PALETTE.paper));
 
   const [tool, setTool] = useState<Tool>('drop');

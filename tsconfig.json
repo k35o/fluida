@@ -22,12 +22,7 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noUncheckedIndexedAccess": true,
-    "types": [
-      "node",
-      "vite/client",
-      "vite-plus/test/globals",
-      "vite-plus/test/importMeta"
-    ],
+    "types": ["node", "vite/client", "vite-plus/test/importMeta"],
 
     // better-css-modules が __generated__ に書く *.module.css の型を読む
     "rootDirs": [".", "./__generated__"]

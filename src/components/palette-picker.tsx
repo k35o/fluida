@@ -1,4 +1,5 @@
-import { PALETTES, type Palette } from '../engine/palettes';
+import { PALETTES } from '../engine/palettes';
+import type { Palette } from '../engine/palettes';
 import { INK_SLOTS } from './ink-slots';
 
 import styles from './palette-picker.module.css';

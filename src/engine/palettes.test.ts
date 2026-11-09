@@ -1,3 +1,5 @@
+import { describe, expect, it } from 'vite-plus/test';
+
 import { DEFAULT_PALETTE, findPalette, PALETTES } from './palettes';
 
 const HEX_COLOR = /^#[0-9a-f]{6}$/u;

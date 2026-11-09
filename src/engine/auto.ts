@@ -1,5 +1,6 @@
 import type { Palette } from './palettes';
-import { pick, randomBetween, type Rng } from './rng';
+import { pick, randomBetween } from './rng';
+import type { Rng } from './rng';
 
 /** 論理座標（0..1000）の正方形。session 側で uv に変換する */
 export const ART_SIZE = 1000;
