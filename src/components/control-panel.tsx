@@ -1,4 +1,5 @@
 import { Button, Card, Separator, Slider, SparklesIcon } from '@k8ordo/ui';
+import { useId } from 'react';
 
 import type { InkChoice, Palette } from '../engine/palettes';
 import type { Tool } from '../engine/session';
@@ -47,6 +48,7 @@ export function ControlPanel({
   onAuto,
 }: ControlPanelProps) {
   const slider = SLIDERS[tool];
+  const sliderId = useId();
 
   return (
     <Card>
@@ -55,10 +57,13 @@ export function ControlPanel({
           <ToolPicker tool={tool} onToolChange={onToolChange} />
           <div className={styles.param}>
             <div className={styles.paramHeader}>
-              <p className={styles.paramLabel}>{slider.label}</p>
+              <label className={styles.paramLabel} htmlFor={sliderId}>
+                {slider.label}
+              </label>
               <span className={styles.paramValue}>{params[tool]}</span>
             </div>
             <Slider
+              id={sliderId}
               max={slider.max}
               min={slider.min}
               step={1}
