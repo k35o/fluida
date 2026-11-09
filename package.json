@@ -9,8 +9,8 @@
     "dev": "vp dev",
     "build": "vp build",
     "preview": "vp preview",
-    "test": "vitest run",
-    "test:watch": "vitest",
+    "test": "vp test run",
+    "test:watch": "vp test",
     "typecheck": "better-css-modules generate && tsc --noEmit",
     "check": "better-css-modules generate && vp check && better-css-modules check",
     "check:write": "better-css-modules generate && vp check --fix"
@@ -32,9 +32,8 @@
     "@types/react-dom": "19.3.0",
     "@vitejs/plugin-react": "6.0.2",
     "typescript": "7.0.2",
-    "vite": "8.0.14",
-    "vite-plus": "0.2.9",
-    "vitest": "4.1.10"
+    "vite": "catalog:",
+    "vite-plus": "catalog:"
   },
   "engines": {
     "node": ">=24.13.0"

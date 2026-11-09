@@ -36,3 +36,4 @@ settings.local.json
 
 # better-css-modules
 __generated__
+.vitest/
