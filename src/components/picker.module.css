@@ -1,0 +1,79 @@
+.legend {
+  margin-block-end: calc(var(--spacing) * 2.5);
+  color: var(--color-fg-mute);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  line-height: var(--line-height-sm);
+}
+
+/* 選択とフォーカスの見た目は、ラベルの中に隠した radio から引く */
+.option {
+  border: 1px solid var(--color-border-mute);
+  color: var(--color-fg-mute);
+  cursor: pointer;
+  transition-property: color, background-color, border-color;
+  transition-duration: var(--duration-fast);
+  transition-timing-function: var(--easing-out);
+
+  &:has(:checked) {
+    border-color: var(--color-primary-border);
+    background-color: var(--color-primary-bg-subtle);
+    color: var(--color-fg-base);
+  }
+
+  @media (hover: hover) {
+    &:hover {
+      background-color: var(--color-bg-subtle);
+    }
+
+    &:has(:checked):hover {
+      background-color: var(--color-primary-bg-subtle);
+    }
+  }
+
+  &:has(:focus-visible) {
+    outline: 2px solid transparent;
+    box-shadow: var(--shadow-ring-info);
+  }
+
+  @media (forced-colors: active) {
+    &:has(:checked) {
+      border-color: var(--color-system-highlight);
+    }
+  }
+}
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* 色そのものを見せる丸。選んだものは外側の輪で示す */
+.swatch {
+  display: block;
+  width: calc(var(--spacing) * 9);
+  height: calc(var(--spacing) * 9);
+  border: 1px solid var(--color-border-mute);
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  transition-property: border-color;
+  transition-duration: var(--duration-fast);
+  transition-timing-function: var(--easing-out);
+  forced-color-adjust: none;
+
+  @media (hover: hover) {
+    &:hover {
+      border-color: var(--color-border-emphasize);
+    }
+  }
+
+  &:has(:checked),
+  &:has(:focus-visible) {
+    outline: 2px solid var(--color-primary-border);
+    outline-offset: 2px;
+  }
+}

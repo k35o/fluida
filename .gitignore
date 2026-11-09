@@ -33,3 +33,6 @@ logs
 # Local settings
 settings.local.json
 .claude/worktrees/
+
+# better-css-modules
+__generated__

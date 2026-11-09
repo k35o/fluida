@@ -2,6 +2,9 @@ import { Droplet, Tornado, Waves, Wind } from 'lucide-react';
 
 import type { Tool } from '../engine/session';
 
+import picker from './picker.module.css';
+import styles from './tool-picker.module.css';
+
 type ToolPickerProps = {
   tool: Tool;
   onToolChange: (tool: Tool) => void;
@@ -17,19 +20,14 @@ const TOOLS = [
 export function ToolPicker({ tool, onToolChange }: ToolPickerProps) {
   return (
     <fieldset>
-      <legend className="text-fg-mute mb-2.5 text-sm font-medium">
-        どうぐ
-      </legend>
-      <div className="grid grid-cols-4 gap-2">
+      <legend className={picker.legend}>どうぐ</legend>
+      <div className={styles.grid}>
         {TOOLS.map(({ id, label, icon: Icon }) => (
-          <label
-            key={id}
-            className="border-border-mute text-fg-mute has-[:checked]:border-primary-border has-[:checked]:bg-primary-bg-subtle has-[:checked]:text-fg-base hover:bg-bg-subtle hover:has-[:checked]:bg-primary-bg-subtle has-[:focus-visible]:ring-primary-border flex cursor-pointer flex-col items-center gap-1.5 rounded-2xl border px-1 py-3.5 transition-colors duration-150 ease-out has-[:focus-visible]:ring-2"
-          >
+          <label key={id} className={`${picker.option} ${styles.tool}`}>
             <input
               aria-label={label}
               checked={tool === id}
-              className="sr-only"
+              className={picker.srOnly}
               name="tool"
               type="radio"
               value={id}
@@ -37,8 +35,8 @@ export function ToolPicker({ tool, onToolChange }: ToolPickerProps) {
                 onToolChange(id);
               }}
             />
-            <Icon aria-hidden className="size-5" />
-            <span className="text-xs font-medium">{label}</span>
+            <Icon aria-hidden size={20} />
+            <span className={styles.label}>{label}</span>
           </label>
         ))}
       </div>

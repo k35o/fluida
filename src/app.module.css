@@ -1,0 +1,104 @@
+.root {
+  min-height: 100dvh;
+  background-color: var(--color-bg-subtle);
+  color: var(--color-fg-base);
+}
+
+.container {
+  margin-inline: auto;
+  max-width: 72rem;
+  padding: calc(var(--spacing) * 7) calc(var(--spacing) * 4)
+    calc(var(--spacing) * 16);
+
+  @media (width >= 48rem) {
+    padding-block-start: calc(var(--spacing) * 10);
+    padding-inline: calc(var(--spacing) * 8);
+  }
+}
+
+.header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: calc(var(--spacing) * 4) calc(var(--spacing) * 6);
+  padding-block-end: calc(var(--spacing) * 8);
+
+  @media (width >= 48rem) {
+    padding-block-end: calc(var(--spacing) * 10);
+  }
+}
+
+.brand {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: calc(var(--spacing) * 1) calc(var(--spacing) * 3.5);
+}
+
+.wordmark {
+  font-family: var(--font-family-wordmark);
+  font-size: var(--font-size-3xl);
+  font-style: italic;
+  line-height: var(--line-height-none);
+}
+
+.tagline {
+  color: var(--color-fg-mute);
+  font-size: var(--font-size-sm);
+  line-height: var(--line-height-sm);
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: calc(var(--spacing) * 1.5);
+}
+
+.divider {
+  margin-inline: calc(var(--spacing) * 1.5);
+  width: 1px;
+  height: calc(var(--spacing) * 6);
+  background-color: var(--color-border-mute);
+}
+
+.main {
+  display: grid;
+  align-items: start;
+  gap: calc(var(--spacing) * 8);
+
+  @media (width >= 64rem) {
+    grid-template-columns: minmax(0, 1fr) 320px;
+    gap: calc(var(--spacing) * 10);
+  }
+}
+
+.stage {
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--spacing) * 4);
+}
+
+.canvasFrame {
+  margin-inline: auto;
+  width: 100%;
+
+  @media (width >= 64rem) {
+    /* デスクトップでは作品全体が一望できる高さに収める */
+    max-width: calc(100dvh - 15rem);
+  }
+}
+
+.hint {
+  color: var(--color-fg-mute);
+  font-size: var(--font-size-sm);
+  line-height: var(--line-height-sm);
+  text-align: center;
+}
+
+.panel {
+  @media (width >= 64rem) {
+    position: sticky;
+    top: calc(var(--spacing) * 8);
+  }
+}

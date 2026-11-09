@@ -27,10 +27,10 @@ pnpm install
 pnpm dev        # 開発サーバー
 pnpm test       # ユニットテスト (vitest)
 pnpm typecheck  # 型チェック
-pnpm check      # lint + format (vp check)
+pnpm check      # lint + format (vp check) + CSS Modules の検査 (better-css-modules)
 pnpm build      # プロダクションビルド
 ```
 
 ツールチェーンは [vite-plus](https://voidzero.dev) (`vp`) + pnpm。
-UI は [@k8o/arte-odyssey](https://github.com/k35o/arte-odyssey) を使用。
+UI は [@k8ordo/ui](https://ordo.k8o.me) を使い、スタイルは CSS Modules で @k8ordo/ui のトークンを読む。
 WebGL2（`EXT_color_buffer_float`）が必要。

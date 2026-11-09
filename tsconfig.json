@@ -27,7 +27,15 @@
       "vite/client",
       "vite-plus/test/globals",
       "vite-plus/test/importMeta"
-    ]
+    ],
+
+    // better-css-modules が __generated__ に書く *.module.css の型を読む
+    "rootDirs": [".", "./__generated__"]
   },
-  "include": ["src", "vite.config.ts"]
+  "include": [
+    "src",
+    "vite.config.ts",
+    "better-css-modules.config.ts",
+    "__generated__"
+  ]
 }

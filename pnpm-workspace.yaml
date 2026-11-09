@@ -6,7 +6,9 @@ blockExoticSubdeps: true
 minimumReleaseAge: 10080
 
 minimumReleaseAgeExclude:
+  - '@better-css-modules/*'
   - '@k8o/*'
+  - '@k8ordo/*'
   - 'vite-plus@0.2.9'
   - '@voidzero-dev/vite-plus-core@0.2.9'
   - '@voidzero-dev/vite-plus-darwin-arm64@0.2.9'

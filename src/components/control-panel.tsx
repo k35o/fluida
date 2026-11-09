@@ -1,10 +1,4 @@
-import {
-  Button,
-  Card,
-  Separator,
-  Slider,
-  SparklesIcon,
-} from '@k8o/arte-odyssey';
+import { Button, Card, Separator, Slider, SparklesIcon } from '@k8ordo/ui';
 
 import type { InkChoice, Palette } from '../engine/palettes';
 import type { Tool } from '../engine/session';
@@ -12,6 +6,8 @@ import { CustomPaletteEditor } from './custom-palette-editor';
 import { InkPicker } from './ink-picker';
 import { PalettePicker } from './palette-picker';
 import { ToolPicker } from './tool-picker';
+
+import styles from './control-panel.module.css';
 
 type ControlPanelProps = {
   tool: Tool;
@@ -54,15 +50,13 @@ export function ControlPanel({
 
   return (
     <Card>
-      <div className="flex flex-col gap-7 p-6">
-        <div className="flex flex-col gap-5">
+      <div className={styles.body}>
+        <div className={styles.group}>
           <ToolPicker tool={tool} onToolChange={onToolChange} />
-          <div className="flex flex-col gap-2.5">
-            <div className="flex items-baseline justify-between">
-              <p className="text-fg-mute text-sm font-medium">{slider.label}</p>
-              <span className="text-fg-subtle text-xs tabular-nums">
-                {params[tool]}
-              </span>
+          <div className={styles.param}>
+            <div className={styles.paramHeader}>
+              <p className={styles.paramLabel}>{slider.label}</p>
+              <span className={styles.paramValue}>{params[tool]}</span>
             </div>
             <Slider
               max={slider.max}
@@ -76,7 +70,7 @@ export function ControlPanel({
           </div>
         </div>
         <Separator color="subtle" orientation="horizontal" />
-        <div className="flex flex-col gap-5">
+        <div className={styles.group}>
           <PalettePicker
             custom={customPalette}
             paletteId={paletteId}

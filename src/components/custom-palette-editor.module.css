@@ -1,0 +1,116 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--spacing) * 2.5);
+  border: 1px solid var(--color-border-mute);
+  border-radius: var(--radius-2xl);
+  background-color: var(--color-bg-subtle);
+  padding: calc(var(--spacing) * 3.5);
+}
+
+.title {
+  color: var(--color-fg-mute);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-medium);
+  line-height: var(--line-height-xs);
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: calc(var(--spacing) * 2.5);
+}
+
+/* ブラウザの色の入力の枠を消し、丸い色の見本だけを見せる */
+.picker {
+  display: block;
+  width: calc(var(--spacing) * 9);
+  height: calc(var(--spacing) * 9);
+  appearance: none;
+  border: 1px solid var(--color-border-mute);
+  border-radius: var(--radius-full);
+  background-color: transparent;
+  padding: 0;
+  cursor: pointer;
+  transition-property: border-color;
+  transition-duration: var(--duration-fast);
+  transition-timing-function: var(--easing-out);
+  forced-color-adjust: none;
+
+  &::-webkit-color-swatch-wrapper {
+    padding: 0;
+  }
+
+  &::-webkit-color-swatch {
+    border: none;
+    border-radius: var(--radius-full);
+  }
+
+  &::-moz-color-swatch {
+    border: none;
+    border-radius: var(--radius-full);
+  }
+
+  @media (hover: hover) {
+    &:hover {
+      border-color: var(--color-border-emphasize);
+    }
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--color-primary-border);
+    outline-offset: 2px;
+  }
+}
+
+.divider {
+  width: 1px;
+  height: calc(var(--spacing) * 6);
+  background-color: var(--color-border-mute);
+}
+
+.note {
+  color: var(--color-fg-subtle);
+  font-size: var(--font-size-xs);
+  line-height: var(--line-height-xs);
+}
+
+.presets {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: calc(var(--spacing) * 1.5);
+}
+
+.presetsLabel {
+  margin-inline-end: calc(var(--spacing) * 0.5);
+  color: var(--color-fg-subtle);
+  font-size: var(--font-size-xs);
+  line-height: var(--line-height-xs);
+}
+
+.preset {
+  border: 1px solid var(--color-border-mute);
+  border-radius: var(--radius-full);
+  padding: calc(var(--spacing) * 1) calc(var(--spacing) * 2.5);
+  color: var(--color-fg-mute);
+  font-size: var(--font-size-xs);
+  line-height: var(--line-height-xs);
+  cursor: pointer;
+  transition-property: color, background-color;
+  transition-duration: var(--duration-fast);
+  transition-timing-function: var(--easing-out);
+
+  @media (hover: hover) {
+    &:hover {
+      background-color: var(--color-bg-mute);
+      color: var(--color-fg-base);
+    }
+  }
+
+  &:focus-visible {
+    outline: 2px solid transparent;
+    box-shadow: var(--shadow-ring-info);
+  }
+}
