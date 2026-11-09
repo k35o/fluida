@@ -4,9 +4,8 @@ import {
   createFBO,
   compileShader,
   Program,
-  type DoubleFBO,
-  type FBO,
 } from './gl';
+import type { DoubleFBO, FBO } from './gl';
 import {
   ADVECTION_FRAGMENT,
   BASE_VERTEX,
@@ -48,12 +47,12 @@ export class FluidSimulator {
   private readonly gl: WebGL2RenderingContext;
   private readonly blit: ReturnType<typeof createBlit>;
 
-  private velocity: DoubleFBO;
-  private dye: DoubleFBO;
-  private pressure: DoubleFBO;
-  private divergence: FBO;
-  private curl: FBO;
-  private snapshotFbo: FBO;
+  private readonly velocity: DoubleFBO;
+  private readonly dye: DoubleFBO;
+  private readonly pressure: DoubleFBO;
+  private readonly divergence: FBO;
+  private readonly curl: FBO;
+  private readonly snapshotFbo: FBO;
 
   private readonly copyProgram: Program;
   private readonly advectionProgram: Program;

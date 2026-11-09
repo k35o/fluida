@@ -1,25 +1,25 @@
 import type { InkChoice, Palette } from '../engine/palettes';
 import { INK_SLOTS } from './ink-slots';
 
+import styles from './ink-picker.module.css';
+import picker from './picker.module.css';
+
 type InkPickerProps = {
   palette: Palette;
   ink: InkChoice;
   onInkChange: (ink: InkChoice) => void;
 };
 
-const SWATCH_CLASS =
-  'border-border-mute hover:border-border-emphasize block size-9 cursor-pointer rounded-full border transition-colors duration-150 ease-out has-[:checked]:ring-2 has-[:checked]:ring-primary-border has-[:checked]:ring-offset-2 has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-primary-border has-[:focus-visible]:ring-offset-2';
-
 export function InkPicker({ palette, ink, onInkChange }: InkPickerProps) {
   return (
     <fieldset>
-      <legend className="text-fg-mute mb-2.5 text-sm font-medium">いろ</legend>
-      <div className="flex flex-wrap items-center gap-2.5">
-        <label className="border-border-mute text-fg-mute has-[:checked]:border-primary-border has-[:checked]:bg-primary-bg-subtle has-[:checked]:text-fg-base hover:bg-bg-subtle hover:has-[:checked]:bg-primary-bg-subtle has-[:focus-visible]:ring-primary-border flex h-9 cursor-pointer items-center rounded-full border px-3.5 text-sm font-medium transition-colors duration-150 ease-out has-[:focus-visible]:ring-2">
+      <legend className={picker.legend}>いろ</legend>
+      <div className={styles.row}>
+        <label className={`${picker.option} ${styles.cycle}`}>
           <input
             aria-label="じゅんばん（ひと滴ごとに色がめぐる）"
             checked={ink === 'auto'}
-            className="sr-only"
+            className={picker.srOnly}
             name="ink"
             type="radio"
             value="auto"
@@ -32,13 +32,13 @@ export function InkPicker({ palette, ink, onInkChange }: InkPickerProps) {
         {palette.inks.map((color, index) => (
           <label
             key={INK_SLOTS[index] ?? index}
-            className={SWATCH_CLASS}
+            className={picker.swatch}
             style={{ backgroundColor: color }}
           >
             <input
               aria-label={`いろ ${index + 1}`}
               checked={ink === index}
-              className="sr-only"
+              className={picker.srOnly}
               name="ink"
               type="radio"
               value={index}
@@ -46,17 +46,17 @@ export function InkPicker({ palette, ink, onInkChange }: InkPickerProps) {
                 onInkChange(index);
               }}
             />
-            <span className="sr-only">いろ {index + 1}</span>
+            <span className={picker.srOnly}>いろ {index + 1}</span>
           </label>
         ))}
         <label
-          className={SWATCH_CLASS}
+          className={picker.swatch}
           style={{ backgroundColor: palette.paper }}
         >
           <input
             aria-label="キャンバスの色でいれる"
             checked={ink === 'paper'}
-            className="sr-only"
+            className={picker.srOnly}
             name="ink"
             type="radio"
             value="paper"
@@ -64,10 +64,10 @@ export function InkPicker({ palette, ink, onInkChange }: InkPickerProps) {
               onInkChange('paper');
             }}
           />
-          <span className="sr-only">キャンバスの色でいれる</span>
+          <span className={picker.srOnly}>キャンバスの色でいれる</span>
         </label>
       </div>
-      <p className="text-fg-subtle mt-2 text-xs leading-relaxed">
+      <p className={styles.note}>
         ひと滴ごとに色がめぐる「じゅんばん」がおすすめ。右端はキャンバスの色
       </p>
     </fieldset>

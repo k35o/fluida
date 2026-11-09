@@ -1,11 +1,13 @@
+import { describe, expect, it } from 'vite-plus/test';
+
 import { hexToRgb, jitterInk } from './color';
 import { mulberry32 } from './rng';
 
 describe('hexToRgb', () => {
   it('hex を 0..1 の RGB に変換する', () => {
-    expect(hexToRgb('#ff0000')).toEqual({ r: 1, g: 0, b: 0 });
-    expect(hexToRgb('#00ff00')).toEqual({ r: 0, g: 1, b: 0 });
-    expect(hexToRgb('#0000ff')).toEqual({ r: 0, g: 0, b: 1 });
+    expect(hexToRgb('#ff0000')).toStrictEqual({ r: 1, g: 0, b: 0 });
+    expect(hexToRgb('#00ff00')).toStrictEqual({ r: 0, g: 1, b: 0 });
+    expect(hexToRgb('#0000ff')).toStrictEqual({ r: 0, g: 0, b: 1 });
   });
 
   it('中間色も変換できる', () => {
@@ -40,6 +42,6 @@ describe('jitterInk', () => {
     const rng = mulberry32(7);
     const a = jitterInk('#165e83', rng);
     const b = jitterInk('#165e83', rng);
-    expect(a).not.toEqual(b);
+    expect(a).not.toStrictEqual(b);
   });
 });

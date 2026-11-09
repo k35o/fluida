@@ -6,16 +6,23 @@ blockExoticSubdeps: true
 minimumReleaseAge: 10080
 
 minimumReleaseAgeExclude:
+  - '@better-css-modules/*'
   - '@k8o/*'
-  - 'vite-plus@0.2.9'
-  - '@voidzero-dev/vite-plus-core@0.2.9'
-  - '@voidzero-dev/vite-plus-darwin-arm64@0.2.9'
-  - '@voidzero-dev/vite-plus-darwin-x64@0.2.9'
-  - '@voidzero-dev/vite-plus-linux-arm64-gnu@0.2.9'
-  - '@voidzero-dev/vite-plus-linux-arm64-musl@0.2.9'
-  - '@voidzero-dev/vite-plus-linux-x64-gnu@0.2.9'
-  - '@voidzero-dev/vite-plus-linux-x64-musl@0.2.9'
-  - '@voidzero-dev/vite-plus-win32-arm64-msvc@0.2.9'
-  - '@voidzero-dev/vite-plus-win32-x64-msvc@0.2.9'
+  - '@k8ordo/*'
 
 verifyDepsBeforeRun: install
+
+catalog:
+  vite: npm:@voidzero-dev/vite-plus-core@1.4.0
+  vite-plus: 1.4.0
+
+# vite-plus は Vite を @voidzero-dev/vite-plus-core として持つ。vite を求める依存にも
+# そのコアを渡し、vite ^8 を peer に求める依存にはコアの版番号を許す（vp migrate の配置）
+overrides:
+  vite@*: 'catalog:'
+
+peerDependencyRules:
+  allowAny:
+    - vite
+  allowedVersions:
+    vite: '*'

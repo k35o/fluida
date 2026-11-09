@@ -1,20 +1,20 @@
-import { Button, IconButton, useToast } from '@k8o/arte-odyssey';
+import { Button, IconButton, useToast } from '@k8ordo/ui';
 import { Download, Eraser, Redo2, Undo2 } from 'lucide-react';
 import { useEffect, useRef, useState, useSyncExternalStore } from 'react';
 
 import { CanvasStage } from './components/canvas-stage';
 import { ControlPanel } from './components/control-panel';
-import {
-  DEFAULT_PALETTE,
-  findPalette,
-  type InkChoice,
-} from './engine/palettes';
-import { FluidSession, type GestureConfig, type Tool } from './engine/session';
+import { DEFAULT_PALETTE, findPalette } from './engine/palettes';
+import type { InkChoice } from './engine/palettes';
+import { FluidSession } from './engine/session';
+import type { GestureConfig, Tool } from './engine/session';
 import { saveOrShareImage } from './helpers/share-image';
 import {
   CUSTOM_PALETTE_ID,
   useCustomPalette,
 } from './hooks/use-custom-palette';
+
+import styles from './app.module.css';
 
 const HINTS: Record<Tool, string> = {
   drop: 'とん、とタップでしずくがひろがる。おしたまま動かすと連なる',
@@ -39,6 +39,9 @@ function timestamp(): string {
 }
 
 export function App() {
+  // 一度だけ作って差し替えないので setter を持たない。render 中に ref を読む遅延初期化は
+  // React Compiler の規則に触れる
+  // oxlint-disable-next-line react/hook-use-state
   const [session] = useState(() => new FluidSession(DEFAULT_PALETTE.paper));
 
   const [tool, setTool] = useState<Tool>('drop');
@@ -56,7 +59,7 @@ export function App() {
   const [customPalette, setCustomPalette] = useCustomPalette();
   const palette =
     paletteId === CUSTOM_PALETTE_ID ? customPalette : findPalette(paletteId);
-  const { onOpen } = useToast();
+  const { open: openToast } = useToast();
 
   useEffect(() => {
     const onKeyDown = (event: KeyboardEvent) => {
@@ -107,13 +110,13 @@ export function App() {
       const blob = await session.exportPng();
       const result = await saveOrShareImage(blob, `fluida-${timestamp()}.png`);
       if (result === 'shared') {
-        onOpen('success', 'シェアしました');
+        openToast('success', 'シェアしました');
       } else if (result === 'downloaded') {
-        onOpen('success', 'もようを画像にのこしました');
+        openToast('success', 'もようを画像にのこしました');
       }
       // canceled（共有シートを閉じた）ときは何も出さない
     } catch {
-      onOpen('error', 'のこせませんでした。もう一度ためしてください');
+      openToast('error', 'のこせませんでした。もう一度ためしてください');
     }
   };
 
@@ -121,20 +124,18 @@ export function App() {
   // 確認ダイアログで止めずに即実行し、トーストで戻し方を案内する
   const handleClear = () => {
     session.clear();
-    onOpen('info', 'まっさらにしました。「もどす」で戻せます');
+    openToast('info', 'まっさらにしました。「もどす」で戻せます');
   };
 
   return (
-    <div className="bg-bg-subtle text-fg-base min-h-dvh">
-      <div className="mx-auto max-w-6xl px-4 pt-7 pb-16 md:px-8 md:pt-10">
-        <header className="flex flex-wrap items-center justify-between gap-x-6 gap-y-4 pb-8 md:pb-10">
-          <div className="flex flex-wrap items-baseline gap-x-3.5 gap-y-1">
-            <h1 className="font-wordmark text-3xl leading-none italic md:text-4xl">
-              fluida
-            </h1>
-            <p className="text-fg-mute text-sm">ゆらして描く、えのぐあそび</p>
+    <div className={styles.root}>
+      <div className={styles.container}>
+        <header className={styles.header}>
+          <div className={styles.brand}>
+            <h1 className={styles.wordmark}>fluida</h1>
+            <p className={styles.tagline}>ゆらして描く、えのぐあそび</p>
           </div>
-          <div className="flex items-center gap-1.5">
+          <div className={styles.actions}>
             <IconButton
               color="transparent"
               disabled={!snapshot.canUndo}
@@ -143,7 +144,7 @@ export function App() {
                 session.undo();
               }}
             >
-              <Undo2 aria-hidden className="size-5" />
+              <Undo2 aria-hidden size={20} />
             </IconButton>
             <IconButton
               color="transparent"
@@ -153,7 +154,7 @@ export function App() {
                 session.redo();
               }}
             >
-              <Redo2 aria-hidden className="size-5" />
+              <Redo2 aria-hidden size={20} />
             </IconButton>
             <IconButton
               color="transparent"
@@ -161,24 +162,23 @@ export function App() {
               label="まっさらにする"
               onClick={handleClear}
             >
-              <Eraser aria-hidden className="size-5" />
+              <Eraser aria-hidden size={20} />
             </IconButton>
-            <div aria-hidden className="bg-border-mute mx-1.5 h-6 w-px" />
+            <div aria-hidden className={styles.divider} />
             <Button
               color="primary"
               disabled={snapshot.isEmpty}
               size="md"
-              startIcon={<Download aria-hidden className="size-4" />}
+              startIcon={<Download aria-hidden size={16} />}
               onAction={handleSave}
             >
               画像でのこす
             </Button>
           </div>
         </header>
-        <main className="grid items-start gap-8 lg:grid-cols-[minmax(0,1fr)_320px] lg:gap-10">
-          <section className="flex flex-col gap-4">
-            {/* デスクトップでは作品全体が一望できる高さに収める */}
-            <div className="mx-auto w-full lg:max-w-[calc(100dvh-15rem)]">
+        <main className={styles.main}>
+          <section className={styles.stage}>
+            <div className={styles.canvasFrame}>
               <CanvasStage
                 buildConfig={buildConfig}
                 paper={palette.paper}
@@ -188,9 +188,9 @@ export function App() {
                 unsupported={snapshot.unsupported}
               />
             </div>
-            <p className="text-fg-mute text-center text-sm">{HINTS[tool]}</p>
+            <p className={styles.hint}>{HINTS[tool]}</p>
           </section>
-          <div className="lg:sticky lg:top-8">
+          <div className={styles.panel}>
             <ControlPanel
               customPalette={customPalette}
               ink={ink}

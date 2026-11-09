@@ -1,5 +1,7 @@
-import { ART_SIZE, generateAutoScript, type AutoAction } from './auto';
-import { hexToRgb, jitterInk, toneInk, type RGB } from './color';
+import { ART_SIZE, generateAutoScript } from './auto';
+import type { AutoAction } from './auto';
+import { hexToRgb, jitterInk, toneInk } from './color';
+import type { RGB } from './color';
 import { FluidSimulator } from './fluid/simulator';
 import type { Palette } from './palettes';
 import { mulberry32 } from './rng';
@@ -80,7 +82,7 @@ export class FluidSession {
   private sim: FluidSimulator | null = null;
   private gesture: Gesture | null = null;
 
-  private undoStack: HistoryEntry[] = [];
+  private readonly undoStack: HistoryEntry[] = [];
   private redoStack: HistoryEntry[] = [];
   private hasInk = false;
   /** detach 時に退避して、再 attach で復元する */
@@ -98,7 +100,7 @@ export class FluidSession {
     color: RGB;
   }> = [];
 
-  private listeners = new Set<() => void>();
+  private readonly listeners = new Set<() => void>();
   private snapshot: SessionSnapshot = {
     canUndo: false,
     canRedo: false,
@@ -553,7 +555,7 @@ export class FluidSession {
     }
   }
 
-  private frame = (now: number): void => {
+  private readonly frame = (now: number): void => {
     this.rafId = 0;
     const { sim } = this;
     const { canvas } = this;

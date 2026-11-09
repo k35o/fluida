@@ -1,0 +1,38 @@
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--spacing) * 7);
+  padding: calc(var(--spacing) * 6);
+}
+
+.group {
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--spacing) * 5);
+}
+
+.param {
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--spacing) * 2.5);
+}
+
+.paramHeader {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+}
+
+.paramLabel {
+  color: var(--color-fg-mute);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  line-height: var(--line-height-sm);
+}
+
+.paramValue {
+  color: var(--color-fg-subtle);
+  font-size: var(--font-size-xs);
+  font-variant-numeric: tabular-nums;
+  line-height: var(--line-height-xs);
+}

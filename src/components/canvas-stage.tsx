@@ -1,13 +1,10 @@
-import { cn } from '@k8o/arte-odyssey';
 import type { PointerEvent } from 'react';
 import { useCallback } from 'react';
 
-import {
-  ART_SIZE,
-  type FluidSession,
-  type GestureConfig,
-  type Tool,
-} from '../engine/session';
+import { ART_SIZE } from '../engine/session';
+import type { FluidSession, GestureConfig, Tool } from '../engine/session';
+
+import styles from './canvas-stage.module.css';
 
 type CanvasStageProps = {
   session: FluidSession;
@@ -76,11 +73,11 @@ export function CanvasStage({
   };
 
   return (
-    <div className="relative">
+    <div className={styles.root}>
       <canvas
         ref={attachCanvas}
         aria-label="えのぐあそびのキャンバス。ポインターでえのぐを落としたり流したりして模様を描く"
-        className="block aspect-square w-full cursor-crosshair touch-none rounded-2xl shadow-lg ring-1 shadow-black/5 ring-black/5 select-none"
+        className={styles.canvas}
         style={{ backgroundColor: paper }}
         onPointerDown={handlePointerDown}
         onPointerMove={handlePointerMove}
@@ -90,21 +87,17 @@ export function CanvasStage({
       />
       <div
         aria-hidden
-        className={cn(
-          'pointer-events-none absolute inset-0 flex flex-col items-center justify-center gap-2 transition-opacity duration-300 ease-out',
-          showWelcome && !unsupported ? 'opacity-100' : 'opacity-0',
-        )}
+        className={styles.welcome}
+        data-visible={showWelcome && !unsupported}
       >
-        <p className="text-fg-mute text-lg md:text-xl">
-          とぷん、とひと滴おとしてみよう
-        </p>
-        <p className="text-fg-subtle text-sm">
+        <p className={styles.welcomeTitle}>とぷん、とひと滴おとしてみよう</p>
+        <p className={styles.welcomeNote}>
           「おまかせで描く」から始めるのもおすすめ
         </p>
       </div>
       {unsupported ? (
-        <div className="absolute inset-0 flex items-center justify-center p-6">
-          <p className="text-fg-mute text-center text-sm leading-relaxed">
+        <div className={styles.unsupported}>
+          <p className={styles.unsupportedText}>
             お使いのブラウザでは WebGL2 が利用できないため、
             <br />
             えのぐあそびができません。最新のブラウザでお試しください。

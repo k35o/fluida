@@ -1,4 +1,7 @@
-import { ART_SIZE, generateAutoScript, type AutoAction } from './auto';
+import { describe, expect, it } from 'vite-plus/test';
+
+import { ART_SIZE, generateAutoScript } from './auto';
+import type { AutoAction } from './auto';
 import { DEFAULT_PALETTE } from './palettes';
 import { mulberry32 } from './rng';
 
@@ -27,7 +30,7 @@ describe('generateAutoScript', () => {
   it('実行時刻が昇順に並んでいる', () => {
     const actions = generateAutoScript(DEFAULT_PALETTE, mulberry32(3));
     const times = actions.map((action) => action.t);
-    expect(times).toEqual(times.toSorted((a, b) => a - b));
+    expect(times).toStrictEqual(times.toSorted((a, b) => a - b));
   });
 
   it('しずくの座標はキャンバス内、色はパレット由来になる', () => {
