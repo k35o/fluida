@@ -18,7 +18,7 @@ export default defineConfig({
       reportUnusedDisableDirectives: 'error',
     },
     settings: {
-      react: { version: '19.2.6' },
+      react: { version: '19.3.0' },
       tailwindcss: {
         entryPoint: [
           {
